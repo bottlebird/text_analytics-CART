@@ -24,9 +24,9 @@ aggregate(reviews$nchar, list(reviews$review_scores_rating), mean)
 # 5. Stem the document
 
 # 1. Change all the comments to lower case. 
-corpus = Corpus(VectorSource(reviews$comments)) # An array of document
+corpus = Corpus(VectorSource(reviews$comments)) # An array/collection of documents containing texts
 corpus[[1]]   # individual doc
-strwrap(corpus[[1]])
+strwrap(corpus[[1]]) #strwrap: split a sentence
 strwrap(corpus[[2]])
 
 # The function tm_map applies an operation to every document in the corpus. 
@@ -106,3 +106,16 @@ accuracy.cart = (matrix.cart[1,1]+matrix.cart[2,2])/nrow(test)
 # True Positive Rate (TPR) and False Positive Rate (FPR)
 TPR.cart = (matrix.cart[2,2])/sum(matrix.cart[2,])
 FPR.cart = (matrix.cart[1,2])/sum(matrix.cart[1,])
+
+
+##### Baseline: Baseline model where all reviews are classified as positive
+accuracy.baseline = sum(test$positive_review)/nrow(test)
+TPR.baseline = 1
+FPR.baseline = 1
+
+#Summary of performance
+summary.performance <- data.frame (
+  accuracy=round(c(accuracy.baseline,accuracy.cart),3),
+  TPR=round(c(TPR.baseline,TPR.cart),3),
+  FPR=round(c(FPR.baseline,FPR.cart),3))
+summary.performance
