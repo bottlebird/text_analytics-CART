@@ -1,9 +1,9 @@
 # Predicting Airbnb review scores using text analytics
-Users of Airbnb who reserved lodging can leave a review comment on the Airbnb website and rate their experience of stay. In this page, I will analyze the texts of review comments to build a predictive model that assess whether any given texts are positive (four or five stars) or negative (one through three stars).
+The users of Airbnb who reserve lodging can leave a review comment on the Airbnb website and rate their stay. This page analyzes the texts of reviews to build a model that assesses whether any given texts are positive (four or five stars) or negative (one through three stars).
 
 Structure:
 
-1. Data Exploration and Preliminary Insights
+1. Data Exploration
 2. Texts Preprocessing
 3. Sparsifying the Corpus
 4. Training and Testing
@@ -11,7 +11,7 @@ Structure:
 <br/><br/>
 
 
-## 1. Data Exploration and Preliminary Insights
+## 1. Data Exploration
 The dataset airbnb-small.csv contains review comments and ratings written for listed lodges in New York City between March 2011 and March 2018.
 
 There are seven variables in the dataset:
@@ -41,20 +41,37 @@ aggregate(reviews$nchar, list(reviews$review_scores_rating), mean)
 
 
 ## 2. Texts preprocessing
-Texts Preprocessing according to the following steps.
-1. Convert the texts to lowercase
+The texts are preprocessed based on the following steps:
+1. Convert to lowercase
 2. Remove punctuation
 3. Remove all stop words
 4. Remove the word 'airbnb'
 5. Stem the document
 
+
+#### 1. Convert to lowercase
+This process converts all the comments to lower case.
+
 ```bash
-# 1. Change all the comments to lower case. 
 corpus = Corpus(VectorSource(reviews$comments)) # An array/collection of documents containing texts
 corpus[[1]]   # individual doc
 strwrap(corpus[[1]]) #strwrap: split the sentence
 strwrap(corpus[[2]])
+```
 
+|Original||
+|:--------|:--------|:------|
+|[1]| "Good stay, a few issues with the direction instructions as they were different from where"  ||
+| [2]  |  "the actual property was."  ||
+
+|Converted||
+|:--------|:--------|:------|
+|[1]| "Good stay, a few issues with the direction instructions as they were different from where"  ||
+| [2]  |  "the actual property was."  ||
+
+
+
+```bash
 # tm_map applies an operation to every document in the corpus. 
 # In this case, the operation is to lowercase (tolower). 
 corpus = tm_map(corpus, tolower)
