@@ -194,6 +194,8 @@ FPR.cart = (matrix.cart[1,2])/sum(matrix.cart[1,])
 
 <img src='data/cart_tree.png' width='400' align='middle'>
 
+If we look at the constructed tree, we can see if the word 'shower' is used more than two times, the rating was poor. But if the shower was used one time or none, then we look at the word 'bathroom'. If 'bathroom' was not mentioned at all, then the rating is considered positive, whereas if mentioned, then we have to look at the word 'howev' where having the word appear more than one time indicates the review is poor.
+
 #### Confusion matrix ('matrix.cart')
 <table>
   <tr align='center' style="font-weight:bold">
