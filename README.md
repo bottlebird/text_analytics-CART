@@ -1,7 +1,7 @@
 # Predicting Airbnb review scores using text analytics
 The users of Airbnb who reserve lodging can leave a review comment on the Airbnb website and rate their stay. This page analyzes the texts of reviews to build a model that assesses whether any given texts are positive (four or five stars) or negative (one through three stars).
 
-Structure:
+### Structure:
 
 1. Data Exploration
 2. Texts Preprocessing
@@ -23,7 +23,7 @@ There are seven variables in the dataset:
 - **comments**: the text of the review
 - **review scores rating**: the score that the reviewer gave the listing, with 20 corresponding to one star, and 100 corresponding to five stars
 
-### Review rating table
+#### Review rating table
 
 ```bash
 ###Preliminary insights
@@ -49,7 +49,7 @@ The texts are preprocessed based on the following steps:
 5. Stem the document
 
 
-#### 1. Convert to lowercase
+#### I. Convert to lowercase
 This process converts all the comments to lower case.
 
 ```bash
@@ -59,15 +59,15 @@ strwrap(corpus[[1]]) #strwrap: split the sentence
 strwrap(corpus[[2]])
 ```
 
-|Original||
+|Original|||
 |:--------|:--------|:------|
 |[1]| "Good stay, a few issues with the direction instructions as they were different from where"  ||
-| [2]  |  "the actual property was."  ||
+|[2]|  "the actual property was."  ||
 
-|Converted||
+|Converted|||
 |:--------|:--------|:------|
 |[1]| "Good stay, a few issues with the direction instructions as they were different from where"  ||
-| [2]  |  "the actual property was."  ||
+|[2]|  "the actual property was."  ||
 
 
 
