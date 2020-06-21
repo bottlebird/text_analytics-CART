@@ -50,46 +50,71 @@ The texts are preprocessed based on the following steps:
 
 
 #### I. Convert to lowercase
-This process converts all the comments to lower case.
+This process converts all the comments to lower case. tm_map applies an operation to every document in the corpus. In this case, the operation is to lowercase (tolower).
 
 ```bash
 corpus = Corpus(VectorSource(reviews$comments)) # An array/collection of documents containing texts
 corpus[[1]]   # individual doc
 strwrap(corpus[[1]]) #strwrap: split the sentence
-strwrap(corpus[[2]])
+
+corpus = tm_map(corpus, tolower)
+strwrap(corpus[[1]])
 ```
 
-||Original||
-|:--------|:--------|:------|
-|[1]| "Good stay, a few issues with the direction instructions as they were different from where"  ||
-|[2]|  "the actual property was."  ||
+||Original|
+|:--------|:--------|
+|[1]| "Good stay, a few issues with the direction instructions as they were different from where"  |
+|[2]|  "the actual property was."  |
 
-||Converted||
-|:--------|:--------|:------|
-|[1]| "Good stay, a few issues with the direction instructions as they were different from where"  ||
-|[2]|  "the actual property was."  ||
+||Converted|
+|:--------|:--------|
+|[1]| "good stay, a few issues with the direction instructions as they were different from where" |
+|[2]|  "the actual property was."  |
+
+#### II. Remove punctuation
+This process removes all the puctuations from the document.
+
+```bash
+corpus <- tm_map(corpus, removePunctuation)
+strwrap(corpus[[1]])
+```
+
+||Original|
+|:--------|:--------|
+|[1]| "good stay, a few issues with the direction instructions as they were different from where" |
+|[2]|  "the actual property was."  |
+
+||Converted|
+|:--------|:--------|
+|[1]| "good stay a few issues with the direction instructions as they were different from where"  |
+|[2]|  "the actual property was"   |
+
+#### III. Remove all stop words
+This process removes all the stop words, such as 'my', 'me', 'myself', etc. 'stopwords("english")' is a dataframe that contains a list of stop words. 
+```bash
+corpus = tm_map(corpus, removeWords, stopwords("english"))
+# stop words. Let us look at the first ten stop words. 
+stopwords("english")[1:10]
+# Checking again:  
+strwrap(corpus[[1]])
+```
+|First ten stop words from 'stopwords("english")'|
+|:--------|
+|"i"         "me"        "my"        "myself"    "we"        "our"       "ours"      "ourselves"     "you"       "your" |
+
+
+|Original|
+|:--------|
+|[1] "good stay a few issues with the direction instructions as they were different from where"  |
+|[2]  "the actual property was"   |
+
+|Converted|
+|:--------|
+|[1] "good stay issues direction instructions different actual property"|
 
 
 
 ```bash
-# tm_map applies an operation to every document in the corpus. 
-# In this case, the operation is to lowercase (tolower). 
-corpus = tm_map(corpus, tolower)
-strwrap(corpus[[1]])
-
-# 2. Remove punctuation from the document
-corpus <- tm_map(corpus, removePunctuation)
-strwrap(corpus[[1]])
-
-# 3. Remove all stop words:  
-corpus = tm_map(corpus, removeWords, stopwords("english"))  # removeWords(corpus,stopwords("english"))
-# stopwords("english") is a dataframe that constains a list of 
-# stop words. Let us look at the first ten stop words. 
-stopwords("english")[1:10]
-
-# Checking again:  
-strwrap(corpus[[1]])
-
 # 4. Remove the particular word: 'airbnb'
 # This list can be customized depending on the application context
 #kwic(reviews$comments, pattern="airbnb")
