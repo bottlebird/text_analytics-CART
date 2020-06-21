@@ -27,7 +27,6 @@ aggregate(reviews$nchar, list(reviews$review_scores_rating), mean)
 corpus = Corpus(VectorSource(reviews$comments)) # An array/collection of documents containing texts
 corpus[[1]]   # individual doc
 strwrap(corpus[[1]]) #strwrap: split a sentence
-strwrap(corpus[[2]])
 
 # The function tm_map applies an operation to every document in the corpus. 
 # In this case, the operation is 'tolower" (i.e. to lowercase). 
@@ -65,7 +64,7 @@ strwrap(corpus[[1]])
 ### c) Sparsify
 # "Sparsify" the corpus and remove infrequent words. 
 # First, calculate the frequency of each words over all tweets. 
-frequencies = DocumentTermMatrix(corpus)
+frequencies = DocumentTermMatrix(corpus) # constructs or coerces to a term-document matrix
 frequencies   # documents as the rows, terms as the columns
 
 # Words that appear at least 900 times: 
@@ -83,10 +82,9 @@ sparse # We now have 404 terms instead of 7,040
 # Each row corresponds to each document (review)
 document_terms = as.data.frame(as.matrix(sparse))
 str(document_terms)
-# Create a new column for the dependent variable: 
+# Create a new column for the dependent variable, which indicates TRUE if the review is positive (score>=80).
 document_terms$positive_review = reviews$review_scores_rating >= 80
 head(reviews)
-
 # Split training and test set to prepare for the modeling
 split1 = (reviews$date < "2018-01-01")
 split2 = (reviews$date >= "2018-01-01")
