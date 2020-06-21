@@ -59,12 +59,12 @@ strwrap(corpus[[1]]) #strwrap: split the sentence
 strwrap(corpus[[2]])
 ```
 
-|Original|||
+||Original||
 |:--------|:--------|:------|
 |[1]| "Good stay, a few issues with the direction instructions as they were different from where"  ||
 |[2]|  "the actual property was."  ||
 
-|Converted|||
+||Converted||
 |:--------|:--------|:------|
 |[1]| "Good stay, a few issues with the direction instructions as they were different from where"  ||
 |[2]|  "the actual property was."  ||
