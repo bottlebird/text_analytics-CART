@@ -1,10 +1,10 @@
 # Predicting Airbnb review scores using text analytics
-The users of Airbnb who reserve lodging can leave a review comment on the Airbnb website and rate their stay. This page analyzes the texts of reviews to build a model that assesses whether any given texts are positive (four or five stars) or negative (one through three stars).
+Airbnb users can leave a review comment and rate their stay on the Airbnb website. This page analyzes the texts of review to build a model that assesses whether any given texts are positive (four or five stars) or negative (one ~ three stars).
 
 ### Structure:
 
 1. Data Exploration
-2. Texts Preprocessing
+2. Text Preprocessing
 3. Sparsifying the Corpus
 4. Training and Testing
 5. Prediction
@@ -12,7 +12,7 @@ The users of Airbnb who reserve lodging can leave a review comment on the Airbnb
 
 
 ## 1. Data Exploration
-The dataset airbnb-small.csv contains review comments and ratings written for listed lodges in New York City between March 2011 and March 2018.
+The dataset <a href="data/airbnb-small.csv">airbnb-small.csv</a> contains review comments and ratings written for listed lodges in New York City between March 2011 and March 2018.
 
 There are seven variables in the dataset:
 - **listing id**: an integer key associated with the listing
@@ -44,12 +44,12 @@ The texts are preprocessed based on the following steps:
 1. Convert to lowercase
 2. Remove punctuation
 3. Remove all stop words
-4. Remove the word 'airbnb'
+4. Remove particular words: 'airbnb'
 5. Stem the document
 
 
 ### I. Convert to lowercase
-This process converts all the comments to lower case. tm_map applies an operation to every document in the corpus. In this case, the operation is to lowercase (tolower).
+This process converts all the comments to lower case. <i><b>tm_map</b></i> applies an operation to every document in the corpus. In this case, the operation is to lowercase (tolower).
 
 ```bash
 corpus = Corpus(VectorSource(reviews$comments)) # An array/collection of documents containing texts
@@ -112,7 +112,7 @@ strwrap(corpus[[1]])
 |[1] "good stay issues direction instructions different actual property"|
 
 
-### IV. Remove the particular word: 'airbnb'
+### IV. Remove particular words: 'airbnb'
 This process removes particular words that are meaningless or unnecessary for the analysis. The list can be updated based on the application context.
 ```bash
 #reviews[grepl("word",reviews$comments),"comments"] #look for comments containing particular word
@@ -194,7 +194,7 @@ FPR.cart = (matrix.cart[1,2])/sum(matrix.cart[1,])
 
 <img src='data/cart_tree.png' width='400' align='middle'>
 
-If we look at the constructed tree, we can see if the word 'shower' is used more than two times, the rating was poor. But if the shower was used one time or none, then we look at the word 'bathroom'. If 'bathroom' was not mentioned at all, then the rating is considered positive, whereas if mentioned, then we have to look at the word 'howev' where having the word appear more than one time indicates the review is poor.
+In the constructed tree, if the word 'shower' is used more than twice in the review, the rating is considered negative. However, if 'shower' is used 0 or 1 time, then the tree looks at the word 'bathroom' to determine whether the review is positive or negative.
 
 #### Confusion matrix ('matrix.cart')
 <table>
@@ -259,5 +259,6 @@ summary.performance
   </tr>
 </table>
 
-The summary table compares the out-of-sample performance of CART models to this baseline. With the CART models, overall accuracy is lower than with the baseline, but the true positive rate is significantly larger than the false positive rate. In other words, the CART models are able to discriminate between the comments that are more likely to result in a positive rating vs. a negative rating.
-Note that both the true positive rate and the false positive rate are very large (90% or higher). This is because the vast majority of ratings are positive in the dataset, so the predictive model errs on the side of classifying reviews as positive ones rather than negative ones. One can thus have very strong confidence in the prediction when a review is classified as positive, while a negative flag should be interpreted with more caution.
+The summary table compares the out-of-sample performance of CART models to this baseline.
+
+Note that both the True Positive Rate and the False Positive Rate are very large (90% or higher). This is because the vast majority of ratings are positive in the dataset, so the predictive model errs on the side of classifying reviews as positive ones rather than negative ones. One can thus have very strong confidence in the prediction when a review is classified as positive, while a negative flag should be interpreted with more caution.
