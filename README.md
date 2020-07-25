@@ -1,5 +1,5 @@
 # Predicting Airbnb review scores using text analytics
-Airbnb users can leave a review comment and rate their stay on the Airbnb website. This page analyzes the texts of review to build a model that assesses whether any given texts are positive (four or five stars) or negative (one ~ three stars).
+Airbnb users can leave a review comment and rate their stay on the Airbnb website. This page analyzes the reviews to build a model that assesses whether any given texts are positive (4 or 5 stars) or negative (1 ~ 3 stars).
 
 ### Structure:
 
